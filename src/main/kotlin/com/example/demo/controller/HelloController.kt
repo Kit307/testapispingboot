@@ -1,6 +1,7 @@
 package com.example.demo.controller
 
 import com.example.demo.model.Employee
+import com.example.demo.repository.EmployeeRepository
 import com.example.demo.service.HelloService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,6 +19,9 @@ class HelloController {
 
     @Autowired
     lateinit var helloService: HelloService
+
+    @Autowired
+    lateinit var employeeRepository: EmployeeRepository
 
     @GetMapping("emp/{empNo}")
     fun getEmpByEmpNo(@PathVariable ("empNo") empNo:String): Employee{
@@ -52,6 +56,66 @@ class HelloController {
     ){
         helloService.saveEmployee()
     }
+
+    @GetMapping("findByAllColumns/empno/{empno}")
+    fun findByAllColumns(
+        @PathVariable empno:String
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByEmpNO(empno)
+    }
+    // generate
+    @GetMapping("findByAllColumns/mgr/{mgr}")
+    fun findByAllColumnsByMgr(
+        @PathVariable mgr:String
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByMgr(mgr)
+    }
+
+    @GetMapping("findByAllColumns/ename/{ename}")
+    fun findByAllColumnsByEname(
+        @PathVariable ename:String
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByEname(ename)
+    }
+
+    @GetMapping("findByAllColumns/job/{job}")
+    fun findByAllColumnsByJob(
+        @PathVariable job:String
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByJob(job)
+    }
+
+    @GetMapping("findByAllColumns/hiredate/{hiredate}")
+    fun findByAllColumnsByHiredate(
+        @PathVariable hiredate:String
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByHiredate(hiredate)
+    }
+
+    @GetMapping("findByAllColumns/sal/{sal}")
+    fun findByAllColumnsBySal(
+        @PathVariable sal:Double
+    ):MutableList<Employee>{
+        return helloService.findByAllColumBySal(sal)
+    }
+
+    @GetMapping("findByAllColumns/commission_pct/{commission_pct}")
+    fun findByAllColumnsByCommission_pct(
+        @PathVariable commission_pct:Double
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByCommission_pct(commission_pct)
+    }
+
+    @GetMapping("findByAllColumns/deptno/{deptno}")
+    fun findByAllColumnsByDeptno(
+        @PathVariable deptno:Int
+    ):MutableList<Employee>{
+        return helloService.findByAllColumByDeptno(deptno)
+    }
+
+
+
+
 
     @PostMapping("savePost")
     fun saveEmployee2(
@@ -93,4 +157,7 @@ class HelloController {
         helloService.upDataSalFormEmpNo(emp["empNo"].toString()?:"",emp["sal"].toString().toDouble())
         return "Update Success"
     }
+
+
+
 }

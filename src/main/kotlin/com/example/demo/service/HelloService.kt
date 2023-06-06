@@ -15,12 +15,14 @@ class HelloService {
     }
 
 
-    @Autowired
-    lateinit var employeeRepository: EmployeeRepository
+
     fun hello2(): MutableList<Employee> {
         return  employeeRepository.findAll()
 
     }
+
+    @Autowired
+    lateinit var employeeRepository: EmployeeRepository
 
     fun getEmployeeByEmpNo(empNo: String): Employee {
         return employeeRepository.findByEmpNoEquals(empNo)
@@ -60,6 +62,43 @@ class HelloService {
         emp.sal = sal
         employeeRepository.save(emp)
     }
+
+    fun findByAllColumByEmpNO(empNo: String): MutableList<Employee> {
+      return  employeeRepository.findByAllColumByEmpNO(empNo)
+    }
+
+    fun findByAllColumByEname(ename: String): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByEname(ename)
+    }
+
+    fun findByAllColumByJob(job: String): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByJob(job)
+    }
+
+    fun findByAllColumByMgr(mgr: String): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByMgr(mgr)
+    }
+
+    fun findByAllColumByHiredate(hiredate: String): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByHiredate(hiredate)
+    }
+
+    fun findByAllColumBySal(sal: Double): MutableList<Employee> {
+        return  employeeRepository.findByAllColumBySal(sal)
+    }
+
+    fun findByAllColumByCommission_pct(commission_pct: Double): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByCommission_pct(commission_pct)
+    }
+
+    fun findByAllColumByDeptno(deptno: Int): MutableList<Employee> {
+        return  employeeRepository.findByAllColumByDeptno(deptno)
+    }
+
+
+
+
+
     fun calGrad(score: String): String {
         try {
             var scoreInt = score.toInt()
@@ -103,5 +142,7 @@ class HelloService {
         val result = engine.eval(numInput)
         return "$numInput = " + String.format("%.2f", result.run { toString().toDouble() })
     }
+
+
 
 }

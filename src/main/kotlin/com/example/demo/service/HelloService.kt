@@ -1,6 +1,8 @@
 package com.example.demo.service
 
+import com.example.demo.model.Department
 import com.example.demo.model.Employee
+import com.example.demo.repository.DepartmentRepository
 import com.example.demo.repository.EmployeeRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -10,8 +12,17 @@ import javax.transaction.Transactional
 
 @Service
 class HelloService {
+    @Autowired
+lateinit var employeeRepository: EmployeeRepository
+
+    @Autowired
+    lateinit var departmentRepository: DepartmentRepository
     fun hello(name: String, lastName: String, code: String): String {
         return " $name $lastName $code"
+    }
+
+    fun getDepartment(): MutableList<Department>{
+        return departmentRepository.findAll()
     }
 
 
@@ -21,8 +32,6 @@ class HelloService {
 
     }
 
-    @Autowired
-    lateinit var employeeRepository: EmployeeRepository
 
     fun getEmployeeByEmpNo(empNo: String): Employee {
         return employeeRepository.findByEmpNoEquals(empNo)

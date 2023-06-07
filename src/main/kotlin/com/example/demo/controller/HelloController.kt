@@ -1,6 +1,8 @@
 package com.example.demo.controller
 
+import com.example.demo.model.Department
 import com.example.demo.model.Employee
+import com.example.demo.repository.DepartmentRepository
 import com.example.demo.repository.EmployeeRepository
 import com.example.demo.service.HelloService
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,11 +18,13 @@ import java.util.*
 
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3000", "http://172.16.0.79:3000")
 class HelloController {
 
     @Autowired
     lateinit var helloService: HelloService
+
+
 
     @Autowired
     lateinit var employeeRepository: EmployeeRepository
@@ -65,7 +69,7 @@ class HelloController {
     ):MutableList<Employee>{
         return helloService.findByAllColumByEmpNO(empno)
     }
-    // generate
+
     @GetMapping("findByAllColumns/mgr/{mgr}")
     fun findByAllColumnsByMgr(
         @PathVariable mgr:String
@@ -115,6 +119,18 @@ class HelloController {
         return helloService.findByAllColumByDeptno(deptno)
     }
 
+    @GetMapping("getDepartment")
+    fun getDepartment(
+    ):MutableList<Department>{
+        return helloService.getDepartment()
+    }
+
+    @GetMapping("getTime")
+    fun getTime(
+    ):Date{
+        return Date()
+    }
+
 
 
 
@@ -150,14 +166,24 @@ class HelloController {
         return dataEmployee
     }
 
-    @PostMapping("upDataSalFormEmpNo")
-    fun upDataSalFormEmpNo(
-        @RequestBody emp: Map<String, Any> = mapOf(Pair("empNo",""),Pair("sal",""))
+    @PostMapping("upDateDataFormEmpNo")
+    fun upDateDataFormEmpNo(
+        @RequestBody emp: Map<String, Any>
     ):String{
-        println( emp["empNo"].toString())
-        println( emp["sal"].toString().toDouble())
-        helloService.upDataSalFormEmpNo(emp["empNo"].toString()?:"",emp["sal"].toString().toDouble())
+        var dataEmp = helloService.getEmployeeByEmpNo(emp["empNo"] as String)
+        dataEmp.ename = (emp["ename"]?:dataEmp.ename).toString()
+        dataEmp.job = (emp["job"]?:dataEmp.job).toString()
+        dataEmp.mgr = (emp["mgr"]?:dataEmp.mgr).toString()
+        dataEmp.hiredate = Timestamp(Date().time)
+        dataEmp.sal = (emp["sal"]?:dataEmp.sal).toString().toDouble()
+        dataEmp.commission_pct = (emp["commission_pct"]?:dataEmp.commission_pct).toString().toDouble()
+        dataEmp.deptno = (emp["deptno"]?:dataEmp.deptno) as Int
+        helloService.saveEmployee2(dataEmp)
         return "Update Success"
+
+        //generate body for postman
+
+
     }
 
 

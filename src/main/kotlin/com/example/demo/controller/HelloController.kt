@@ -51,10 +51,10 @@ class HelloController {
         return helloService.calNumber(num)
     }
 
-    @GetMapping("hello2")
-    fun hello (
+    @GetMapping("getAllEmp")
+    fun getAllEmp (
     ):MutableList<Employee>{
-        return helloService.hello2()
+        return helloService.getAllEmp()
     }
 
     @GetMapping("save")

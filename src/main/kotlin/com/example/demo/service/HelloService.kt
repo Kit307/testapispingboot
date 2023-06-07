@@ -27,7 +27,7 @@ lateinit var employeeRepository: EmployeeRepository
 
 
 
-    fun hello2(): MutableList<Employee> {
+    fun getAllEmp(): MutableList<Employee> {
         return  employeeRepository.findAll()
 
     }
